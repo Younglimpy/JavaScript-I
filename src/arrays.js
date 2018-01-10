@@ -18,9 +18,21 @@ const map = (elements, cb) => {
 
 const reduce = (elements, cb, startingValue) => {
   // Combine all elements into a single value going from left to right.
-  // Elements will be passed one by one into `cb` along with the `startingValue`.
-  // `startingValue` should be the first argument passed to `cb` and the array element should be the second argument.
-  // `startingValue` is the starting value.  If `startingValue` is undefined then make `elements[0]` the initial value.
+  // Elements will be passed one by one into cb along with the startingValue.
+  // startingValue should be the first argument passed to cb and the array element should be the second argument.
+  // startingValue is the starting value.  If startingValue is undefined then make elements[0] the initial value.
+  let i = 0;
+  if (startingValue === undefined) {
+    startingValue = elements[0];
+    i = 1;
+  }
+
+  let memo = startingValue;
+  for (;i < elements.length; i++) {
+    memo = cb(memo, elements[i], i);
+  }
+
+  return memo;
 };
 
 const find = (elements, cb) => {
